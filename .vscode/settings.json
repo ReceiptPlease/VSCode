@@ -1,8 +1,7 @@
 {
-    "typescript.tsc.autoDetect" : "off" ,
+    "deno.enable" : true ,
 
     "files.exclude" : {
-        // "node_modules" : true ,
         "Build" : true
     },
 

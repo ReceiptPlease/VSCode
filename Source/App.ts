@@ -5,7 +5,7 @@ import { SnippetString , Selection , commands , window } from 'vscode'
 const { log } = console;
 
 
-export async function activate ( context ){
+export function activate ( context ){
 
     log(`Activating ReceiptPlease Extension 1`);
 

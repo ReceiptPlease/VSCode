@@ -38,15 +38,6 @@
 
 <br>
 
--   Install **NodeJS**
-
--   Install **NPM Dependencies**
-
-    ```sh
-    cd Configs
-    npm install
-    ```
-    
 -   Install **Deno**
 
 -   Transpile TS to JS
@@ -71,8 +62,6 @@
 <br>
 
 ## Plans
-
--   Remove NodeJS if possible ..
 
 -   Move VSCE replacement code into separate project
 

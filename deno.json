@@ -2,7 +2,12 @@
     "importMap" : "Configs/Imports.json" ,
 
     "tasks" : {
-        "typescript" : "tsc --watch --project ." ,
+        "typescript" : "deno run --allow-read --allow-run --allow-write=. --watch=Source --allow-env Builder/ESBuild.js" ,
         "build" : "deno run --allow-write=. --allow-read=. --allow-run=zip Builder/App.js"
+    },
+
+    "compilerOptions" : {
+        "noUnusedParameters" : false ,
+        "noImplicitAny" : false
     }
 }

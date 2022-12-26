@@ -6,7 +6,6 @@
         "name" : "Run Extension" ,
 
         "runtimeExecutable" : "${execPath}" ,
-        "outFiles": [ "${workspaceFolder}/Build/Transpiled/**/*.js" ] ,
         "request" : "launch" ,
         "args" : [ "--extensionDevelopmentPath=${workspaceFolder}/Source" ] ,
         "type" : "extensionHost" ,
