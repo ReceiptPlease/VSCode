@@ -1,0 +1,13 @@
+{
+    "typescript.tsc.autoDetect" : "off" ,
+
+    "files.exclude" : {
+        // "node_modules" : true ,
+        "Build" : true
+    },
+
+    "search.exclude" : {
+        "Configs" : true ,
+        "Build" : true
+    }
+}

@@ -1,0 +1,22 @@
+
+<?xml   encoding = 'utf-8'
+        version = '1.0' ?>
+
+<Types xmlns = 'http://schemas.openxmlformats.org/package/2006/content-types'>
+
+    <Default    ContentType = 'text/xml'
+                Extension = '.vsixmanifest' />
+
+    <Default    ContentType = 'application/json'
+                Extension = '.json' />
+
+    <Default    ContentType = 'text/plain'
+                Extension = '.txt' />
+
+    <Default    ContentType = 'text/markdown'
+                Extension = '.md' />
+
+    <Default    ContentType = 'application/javascript'
+                Extension = '.js' />
+
+</Types>

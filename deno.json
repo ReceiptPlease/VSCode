@@ -1,0 +1,8 @@
+{
+    "importMap" : "Configs/Imports.json" ,
+
+    "tasks" : {
+        "typescript" : "tsc --watch --project ." ,
+        "build" : "deno run --allow-write=. --allow-read=. --allow-run=zip Builder/App.js"
+    }
+}

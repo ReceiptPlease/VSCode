@@ -1,0 +1,75 @@
+<?xml   encoding = 'utf-8'
+        version = '1.0' ?>
+
+<PackageManifest
+    Version = '2.0.0'
+    xmlns:d = 'http://schemas.microsoft.com/developer/vsx-schema-design/2011'
+    xmlns = 'http://schemas.microsoft.com/developer/vsx-schema/2011' >
+
+    <Metadata>
+
+        <Identity
+            Publisher = 'undefined'
+            Language = 'en-US'
+            Version = '0.0.1'
+            Id = 'receipt-please'
+        />
+
+        <DisplayName>Receipt Please</DisplayName>
+        <Description xml:space='preserve'>Various tools to ease Shopify development.</Description>
+        <Tags>shopify,tools,keybindings</Tags>
+        <Categories>Programming Languages,Other</Categories>
+        <GalleryFlags>Public</GalleryFlags>
+
+        <Properties>
+
+            <Property   Value = '&gt;=1.74.0'
+                        Id = 'Microsoft.VisualStudio.Code.Engine' />
+
+            <Property Id='Microsoft.VisualStudio.Code.ExtensionDependencies' Value='' />
+            <Property Id='Microsoft.VisualStudio.Code.ExtensionPack' Value='' />
+            <Property Id='Microsoft.VisualStudio.Code.ExtensionKind' Value='workspace' />
+            <Property Id='Microsoft.VisualStudio.Code.LocalizedLanguages' Value='' />
+
+
+            <Property Id='Microsoft.VisualStudio.Services.Links.Source' Value='https://github.com/ReceiptPlease/VSCode.git' />
+            <Property Id='Microsoft.VisualStudio.Services.Links.Getstarted' Value='https://github.com/ReceiptPlease/VSCode.git' />
+            <Property Id='Microsoft.VisualStudio.Services.Links.GitHub' Value='https://github.com/ReceiptPlease/VSCode.git' />
+            <Property Id='Microsoft.VisualStudio.Services.Links.Support' Value='https://github.com/ReceiptPlease/VSCode/issues' />
+            <Property Id='Microsoft.VisualStudio.Services.Links.Learn' Value='https://github.com/ReceiptPlease/VSCode' />
+
+
+            <Property Id='Microsoft.VisualStudio.Services.GitHubFlavoredMarkdown' Value='true' />
+            <Property Id='Microsoft.VisualStudio.Services.Content.Pricing' Value='Free'/>
+
+
+
+        </Properties>
+
+        <License>LICENSE</License>
+
+    </Metadata>
+
+    <Installation>
+        <InstallationTarget Id = 'Microsoft.VisualStudio.Code' />
+    </Installation>
+
+    <Dependencies/>
+
+    <Assets>
+
+        <Asset  Addressable = 'true'
+                Type = 'Microsoft.VisualStudio.Code.Manifest'
+                Path = 'extension/package.json' />
+
+        <Asset  Addressable = 'true'
+                Type = 'Microsoft.VisualStudio.Services.Content.Details'
+                Path = 'extension/README.md' />
+
+        <Asset  Addressable = 'true'
+                Type = 'Microsoft.VisualStudio.Services.Content.License'
+                Path = 'extension/LICENSE' />
+
+    </Assets>
+
+</PackageManifest>
