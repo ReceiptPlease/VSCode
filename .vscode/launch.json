@@ -7,7 +7,7 @@
 
         "runtimeExecutable" : "${execPath}" ,
         "request" : "launch" ,
-        "args" : [ "--extensionDevelopmentPath=${workspaceFolder}/Source" ] ,
-        "type" : "extensionHost" ,
+        "args" : [ "--extensionDevelopmentPath=${workspaceFolder}/Build/Zip" ] ,
+        "type" : "extensionHost"
     }]
 }

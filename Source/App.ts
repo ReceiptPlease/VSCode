@@ -7,7 +7,7 @@ const { log } = console;
 
 export function activate ( context ){
 
-    log(`Activating ReceiptPlease Extension 1`);
+    log(`Activating ReceiptPlease Extension`);
 
     commands.registerCommand('ReceiptPlease.InsertLiquidTag',() => insertLiquidTag());
     commands.registerCommand('ReceiptPlease.InsertLiquidTag_Stripped',() => insertLiquidTag(true));

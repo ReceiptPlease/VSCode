@@ -2,8 +2,7 @@
     "importMap" : "Configs/Imports.json" ,
 
     "tasks" : {
-        "typescript" : "deno run --allow-read --allow-run --allow-write=. --watch=Source --allow-env Builder/ESBuild.js" ,
-        "build" : "deno run --allow-write=. --allow-read=. --allow-run=zip Builder/App.js"
+        "build" : "deno run --watch=Source --allow-write=. --allow-read --allow-run --allow-env Builder/App.js"
     },
 
     "compilerOptions" : {

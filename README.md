@@ -40,16 +40,10 @@
 
 -   Install **Deno**
 
--   Transpile TS to JS
+-   Build & zip the extension
 
     ```sh
-    deno task typescript
-    ```
-
--   Build the extension
-
-    ```sh
-    deno task build
+    deno task build --zip
     ```
     
 -   Install the `VSIX` zip found at

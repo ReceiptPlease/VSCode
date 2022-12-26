@@ -3,7 +3,10 @@
 
         "vscode" : "npm:@types/vscode@1.73.0" ,
 
+        "ESBuild" : "https://deno.land/x/esbuild@v0.16.10/mod.js" ,
+
         "FileSystem" : "https://deno.land/std@0.170.0/fs/mod.ts" ,
+        "Flags" : "https://deno.land/std@0.170.0/flags/mod.ts" ,
         "Path" : "https://deno.land/std@0.170.0/path/mod.ts"
     }
 }
