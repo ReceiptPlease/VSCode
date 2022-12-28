@@ -14,11 +14,17 @@ export default async function transpile (){
     await emptyDir(Paths.Build);
 
     const process = await build({
-        entryPoints : [ join(Paths.Source,'App.ts') ] ,
+        entryPoints : [ join(Paths.Source,'Extension','App.ts') ] ,
         platform : 'node' ,
         outdir : Paths.Build ,
         target : [ 'node16' ] ,
-        format : 'cjs'
+        format : 'cjs' ,
+        bundle : true ,
+        external : [
+            'vscode' ,
+            'node:path' ,
+            'ndoe:fs/promises'
+        ]
     })
 
     log(process);
