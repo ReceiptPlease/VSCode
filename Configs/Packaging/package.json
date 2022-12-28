@@ -26,11 +26,45 @@
         "node" : ">=18.0.0"
     },
 
+    "activationEvents" : [
+
+        "workspaceContains:**/*.liquid" ,
+
+        "onView:receipt_please.schema_browser"
+    ],
+
     "main" : "App.js" ,
 
     "contributes" : {
 
+        "viewsContainers" : {
+
+            "activitybar" : [{
+                "title" : "Receipt Please" ,
+                "icon" : "Logo.svg" ,
+                "id" : "receipt_please"
+            }]
+        },
+
+        "views" : {
+
+            "receipt_please" : [{
+                "name" : "Receipt Please" ,
+                "type" : "tree" ,
+                "id" : "receipt_please.schema_browser"
+            }]
+        },
+
+        "viewsWelcome" : [{
+            "contents" : "No schemas loaded." ,
+            "view" : "receipt_please.schema_browser"
+        }],
+
         "commands" : [{
+            "command" : "ReceiptPlease.OpenSchema" ,
+            "category" : "ReceiptPlease" ,
+            "title" : "Open Schema"
+        },{
 
             "command" : "ReceiptPlease.InsertLiquidTag" ,
             "category" : "ReceiptPlease" ,
@@ -66,7 +100,5 @@
             "key" : "ctrl+i" ,
             "mac" : "cmd+i"
         }]
-    },
-
-    "activationEvents" : []
+    }
 }

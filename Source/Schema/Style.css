@@ -1,0 +1,12 @@
+
+
+#Settings {
+
+    width : fit-content ;
+
+    padding : 1rem ;
+
+    flex-direction : column ;
+    display : flex ;
+    gap : 0.5rem ;
+}

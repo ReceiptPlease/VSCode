@@ -1,8 +1,9 @@
 {
     "importMap" : "Configs/Imports.json" ,
+    "lock" : "Configs/Lock.json" ,
 
     "tasks" : {
-        "build" : "deno run --watch=Source --allow-write=. --allow-read --allow-run --allow-env Builder/App.js"
+        "build" : "deno run --watch=Source,Configs/Packaging --allow-net=registry.npmjs.org --allow-write --allow-read --allow-run --allow-env Builder/App.js"
     },
 
     "compilerOptions" : {

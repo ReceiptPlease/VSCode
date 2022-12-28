@@ -19,14 +19,19 @@ log(`Building Package - ${ ( Math.random() * 10 ** 4 ) | 0 }`);
 
 await transpile();
 
-await remove(Paths.Zip,{ recursive : true }).catch(() => {});
-await remove(Paths.Package).catch(() => {});
+await remove(Paths.Zip,{ recursive : true })
+    .catch(() => {});
+
+await remove(Paths.Package)
+    .catch(() => {});
 
 await copy(Paths.Packaging,Paths.Zip);
 await copy(Paths.Build,join(Paths.Zip,'extension'));
+await copy(join(Paths.Source,'Schema'),join(Paths.Zip,'extension','Assets'));
 await move(join(Paths.Zip,'package.json'),join(Paths.Zip,'extension','package.json'));
 await move(join(Paths.Zip,'README.md'),join(Paths.Zip,'extension','README.md'));
 await move(join(Paths.Zip,'LICENSE'),join(Paths.Zip,'extension','LICENSE'));
+await move(join(Paths.Zip,'Logo.svg'),join(Paths.Zip,'extension','Logo.svg'));
 
 
 if( Args.zip ){

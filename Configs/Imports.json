@@ -1,12 +1,15 @@
 {
     "imports" : {
 
-        "vscode" : "npm:@types/vscode@1.73.0" ,
+        "vscode" : "npm:@types/vscode@1.73.0/index.d.ts" ,
 
         "ESBuild" : "https://deno.land/x/esbuild@v0.16.10/mod.js" ,
 
         "FileSystem" : "https://deno.land/std@0.170.0/fs/mod.ts" ,
         "Flags" : "https://deno.land/std@0.170.0/flags/mod.ts" ,
-        "Path" : "https://deno.land/std@0.170.0/path/mod.ts"
+        "Path" : "https://deno.land/std@0.170.0/path/mod.ts" ,
+
+        "node:fs/promises" : "https://deno.land/std@0.170.0/node/fs/promises.ts" ,
+        "node:path" : "https://deno.land/std@0.170.0/node/path/mod.ts"
     }
 }
