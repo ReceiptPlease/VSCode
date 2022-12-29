@@ -14,6 +14,9 @@
     src = 'Resources/Screenshots/Schema Editor.png'
 />
 
+<br>
+<br>
+
 </div>
 
 ## Features
