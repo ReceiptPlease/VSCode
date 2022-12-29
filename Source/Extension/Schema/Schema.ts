@@ -34,6 +34,16 @@ class SchemaItem extends TreeItem {
 
 
 
+const isLiquid = ( filename ) =>
+    filename.endsWith('.liquid');
+
+const capitalize = ( word ) =>
+    word.charAt(0).toUpperCase() + word.slice(1);
+
+const nonEmpty = ( string ) =>
+    string.length > 0;
+
+
 class SchemaTree implements TreeDataProvider<SchemaItem> {
 
     context : ExtensionContext ;
@@ -46,39 +56,39 @@ class SchemaTree implements TreeDataProvider<SchemaItem> {
         return element;
     }
 
-    async getChildren ( element ){
-
-        const { customChildren } = element ?? {};
-
-        if(customChildren)
-            return customChildren
+    async getChildren (){
 
         const folder = workspace.workspaceFolders?.at(0)?.uri.path
 
-        if(folder){
+        if( ! folder )
+            return []
 
-            const sections = join(folder,'sections');
 
-            log(folder);
+        const sections = join(folder,'sections');
 
-            // log(await readdir(this.context.extensionPath));
+        const files = await readdir(sections)
+            .catch(() => []);
 
-            const items = await readdir(sections)
-                .catch(() => []);
 
-            const schemas = items
-                .filter((name) => name.endsWith('.liquid'))
-                .map((name) => {
-                    return new SchemaItem(this.context,name.replace('.liquid',''),join(sections,name));
-                });
+        const { context } = this;
 
-            return schemas
+        const toSchema = ( filename ) => {
+
+            const path = join(sections,filename);
+
+            const label = filename
+                .replace(/\.liquid$/,'')
+                .split(/[_-]+/g)
+                .filter(nonEmpty)
+                .map(capitalize)
+                .join(' ');
+
+            return new SchemaItem(context,label,path);
         }
 
-        return []
-      }
 
-
+        return files
+            .filter(isLiquid)
+            .map(toSchema);
+    }
 }
-
-

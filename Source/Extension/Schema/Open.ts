@@ -6,21 +6,27 @@ import { join } from 'node:path'
 
 const { log } = console;
 
-let webview : WebviewPanel | null;
+
+const schemePattern = /(?<=\{% *schema *%\})[\S\s]*(?=\{% *endschema *%\})/;
+
+
+
+let view : WebviewPanel | null;
 let viewPath : string;
+
 
 export async function openSchema ( context : ExtensionContext , filePath : string ){
 
     try {
 
-        if( ! webview ){
+        if( ! view ){
 
-            webview = window.createWebviewPanel('ReceiptPlease.SchemaView','Schema',ViewColumn.One,{
+            view = window.createWebviewPanel('ReceiptPlease.SchemaView','Schema',ViewColumn.One,{
                 enableScripts : true
             });
 
-            webview.onDidDispose(() => {
-                webview = null;
+            view.onDidDispose(() => {
+                view = null;
             },null,context.subscriptions)
         }
 
@@ -31,37 +37,26 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
         viewPath = filePath;
 
-        const toLocal = ( path ) =>
-            webview?.webview.asWebviewUri(Uri.file(path)) ?? '';
+        const { webview } = view;
 
 
-        const content = await readFile(filePath, { encoding: 'utf8' });
+        const content = await readFile(filePath,{ encoding : 'utf8' });
 
-        const schemePattern = /(?<=\{% *schema *%\})[\S\s]*(?=\{% *endschema *%\})/;
 
         const json = content.match(schemePattern)?.[0];
 
-        let data = '';
 
         if(json){
 
             const schema = JSON.parse(json);
 
-            log(schema);
 
-            data = `
-                <label for = max_blocks>Maximum number of blocks ( 0 - 50 ):</label>
-                <input type = number id = max_blocks name = max_blocks min = 0 max = 50>
-            `
-
-            log('data',data)
-
-            webview.webview.postMessage({
+            webview.postMessage({
                 command : 'updateInterface' ,
                 content : schema
             });
 
-            webview.webview.onDidReceiveMessage(async ( message ) => {
+            webview.onDidReceiveMessage(async ( message ) => {
 
                 const { command } = message;
 
@@ -70,7 +65,7 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
                     log('Update File',message);
 
-                    const merged = deepExtend(schema,message.content);
+                    const merged = merge(schema,message.content);
 
                     log('Merged',merged);
 
@@ -86,29 +81,36 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                 }
                 }
             },null,context.subscriptions);
-
-            log('done');
-        } else {
-            console.warn('NO JSON')
         }
 
 
-        const script = toLocal(join(context.extensionPath,'Assets','App.js'));
-        const style = toLocal(join(context.extensionPath,'Assets','Style.css'));
+        const { extensionPath } = context;
 
-        log('links',script,style);
+        const asset = ( ... path ) => {
 
-        webview.webview.html = `
+            const location =
+                join(extensionPath,'Assets', ... path);
+
+            const uri = Uri
+                .file(location);
+
+            return webview
+                .asWebviewUri(uri)
+        }
+
+
+        view.webview.html = `
             <html lang = en>
                 <head>
                     <meta charset = 'UTF-8'>
                     <meta name = viewport content = 'width=device-width, initial-scale=1.0'>
-                    <script type = module src = '${ script }'defer></script>
-                    <link rel = stylesheet type = 'text/css' href = '${ style }'>
+                    <script type = module src = '${ asset('App.js') }'defer></script>
+                    <link rel = stylesheet type = 'text/css' href = '${ asset('Style.css') }'>
                 </head>
                 <body>
                     <div id = Settings >
-                        ${ data }
+                        <label for = max_blocks>Maximum number of blocks ( 0 - 50 ):</label>
+                        <input type = number id = max_blocks name = max_blocks min = 0 max = 50>
                     </div>
                 </body>
             </html>
@@ -120,15 +122,25 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 }
 
 
-function deepExtend ( original , changes ){
-    for (var property in changes) {
-       if (typeof changes[property] === "object" &&
-       changes[property] !== null ) {
-        original[property] = original[property] || {};
-         arguments.callee(original[property], changes[property]);
-       } else {
-        original[property] = changes[property];
-       }
+function merge ( original , changes ){
+
+    for ( const key in changes ){
+
+        const value = changes[key];
+
+        if( typeof value !== 'object' ){
+            original[key] = value;
+            continue
+        }
+
+        if( value === null ){
+            delete original[key];
+            continue
+        }
+
+        const object = original[key] ??= {};
+
+        merge(object,value);
     }
 
     return original

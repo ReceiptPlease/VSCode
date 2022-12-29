@@ -13,10 +13,16 @@ function update (){
 
     log('pstitng message');
 
+
+    let max_blocks =  parseInt(document.getElementById('max_blocks')?.value);
+
+    if( isNaN(max_blocks) )
+        max_blocks = null;
+
     api.postMessage({
         command : 'updateFile' ,
         content : {
-            max_blocks : parseInt(document.getElementById('max_blocks')?.value)
+            max_blocks
         }
     })
 }
