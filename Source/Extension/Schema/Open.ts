@@ -99,6 +99,26 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
         }
 
 
+        function option ({ title , description , link , content , id }){
+            return [
+                `<label for = '${ id }'>` ,
+                `<a href = '${ link }'>${ title }</a>` ,
+                '<br>' ,
+                `<small>${ description }</small>` ,
+                `</label>` ,
+                '<br>' ,
+                content
+            ].join('')
+        }
+
+        function text ({ title , description , link , id }){
+            return option({
+                title , description , link , id ,
+                content : `<input type = text name = '${ id }' id = '${ id }'>`
+            })
+        }
+
+
         view.webview.html = `
             <html lang = en>
                 <head>
@@ -114,21 +134,50 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
                         <br>
 
-                        <label for = name> <a href = 'https://shopify.dev/themes/architecture/sections/section-schema#name'>Name</a> <br> <small>seen in the customizer.</small> </label>
+                        ${
+                            text({
+                                description : 'seen in the customizer.' ,
+                                title : 'Name' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#name' ,
+                                id : 'name'
+                            })
+                        }
 
                         <br>
+                        <br>
 
-                        <input type = text id = name name = name>
+                        ${
+                            option({
+                                description : 'used for the section body.' ,
+                                title : 'Tag' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#tag' ,
+                                id : 'tag' ,
+
+                                content : `
+                                    <select id = tag name = tag>
+                                        <option value = div>Div</option>
+                                        <option value = aside>Aside</option>
+                                        <option value = footer>Footer</option>
+                                        <option value = header>Header</option>
+                                        <option value = section>Section</option>
+                                    </select>
+                                `
+                            })
+                        }
 
                         <br>
                         <br>
 
-                        <label for = max_blocks> <a href = 'https://shopify.dev/themes/architecture/sections/section-schema#max_blocks'>Max Blocks</a> <br> <small>that can be added to this section.</small> </label>
+                        ${
+                            text({
+                                description : 'that can be added to this section.' ,
+                                title : 'Max Blocks' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#max_blocks' ,
+                                id : 'max_blocks'
+                            })
+                        }
 
                         <br>
-
-                        <input type = number id = max_blocks name = max_blocks min = 0 max = 50>
-
                         <br>
 
                     </div>
