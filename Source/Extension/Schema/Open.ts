@@ -170,6 +170,18 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
                         ${
                             text({
+                                description : 'the section body gets assigned.' ,
+                                title : 'Class' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#class' ,
+                                id : 'class'
+                            })
+                        }
+
+                        <br>
+                        <br>
+
+                        ${
+                            text({
                                 description : 'that can be added to this section.' ,
                                 title : 'Max Blocks' ,
                                 link : 'https://shopify.dev/themes/architecture/sections/section-schema#max_blocks' ,
