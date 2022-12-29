@@ -10,3 +10,18 @@
     display : flex ;
     gap : 0.5rem ;
 }
+
+#Settings > input {
+
+    background : var(--vscode-button-secondaryBackground) ;
+
+    border-radius : 4px ;
+    border : 1px solid var(--vscode-button-separator) ;
+
+    padding : 0.2rem 0.4rem ;
+
+    font-weight : bold ;
+    color : var(--vscode-button-foreground) ;
+
+    filter : drop-shadow( 2px 2px 4px #FFFFFF11 ) ;
+}
