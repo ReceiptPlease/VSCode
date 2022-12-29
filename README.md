@@ -29,6 +29,12 @@
 
     <kbd>Ctrl</kbd> + <kbd>I</kbd>
 
+    <br>
+
+-   Section schema editor
+
+    *Work in progress*
+
 <br>
 <br>
 
