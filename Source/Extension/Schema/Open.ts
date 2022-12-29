@@ -181,6 +181,26 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                         <br>
 
                         ${
+                            option({
+                                description : 'of how many times a template can use it.' ,
+                                title : 'Limit' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#limit' ,
+                                id : 'limit' ,
+
+                                content : `
+                                    <select id = limit name = limit>
+                                        <option value = unlimited>Unlimited</option>
+                                        <option value = 1>1</option>
+                                        <option value = 2>2</option>
+                                    </select>
+                                `
+                            })
+                        }
+
+                        <br>
+                        <br>
+
+                        ${
                             text({
                                 description : 'that can be added to this section.' ,
                                 title : 'Max Blocks' ,

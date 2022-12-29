@@ -3,6 +3,7 @@
 const
     html_max_blocks = document.getElementById('max_blocks') ,
     html_class = document.getElementById('class') ,
+    html_limit = document.getElementById('limit') ,
     html_name = document.getElementById('name') ,
     html_tag = document.getElementById('tag') ;
 
@@ -15,6 +16,7 @@ const api = acquireVsCodeApi();
 
 html_max_blocks.oninput = update;
 html_class.oninput = update;
+html_limit.onchange = update;
 html_name.oninput = update;
 html_tag.onchange = update;
 
@@ -43,11 +45,17 @@ function update (){
     if( classes.length < 1 )
         classes = null;
 
+    let limit = html_limit.value;
+
+    if( limit === 'unlimited' )
+        limit = null;
+
     api.postMessage({
         command : 'updateFile' ,
         content : {
             max_blocks ,
             class : classes ,
+            limit ,
             name ,
             tag
         }
@@ -63,8 +71,9 @@ window.addEventListener('message',( event ) => {
     case 'updateInterface' :
 
         html_max_blocks.value = data.content.max_blocks;
-        html_name.value = data.content.name;
+        html_limit.value = data.content.limit ?? 'unlimited';
         html_class.value = data.content.class ?? '';
+        html_name.value = data.content.name;
         html_tag.value = data.content.tag ?? 'div';
 
         break;
