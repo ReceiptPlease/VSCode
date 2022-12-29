@@ -9,6 +9,11 @@
 <br>
 <br>
 
+<img
+    height = 400
+    src = 'Resources/Screenshots/Schema Editor.png'
+/>
+
 </div>
 
 ## Features
