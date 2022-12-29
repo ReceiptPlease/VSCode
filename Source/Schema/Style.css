@@ -2,6 +2,7 @@
 
 #Settings {
 
+    min-width : 420px ;
     width : fit-content ;
 
     padding : 1rem ;
@@ -24,4 +25,10 @@
     color : var(--vscode-button-foreground) ;
 
     filter : drop-shadow( 2px 2px 4px #FFFFFF11 ) ;
+}
+
+#Settings > label > a {
+
+    text-decoration : none ;
+    font-weight : bold ;
 }

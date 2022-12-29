@@ -109,8 +109,28 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                 </head>
                 <body>
                     <div id = Settings >
-                        <label for = max_blocks>Maximum number of blocks ( 0 - 50 ):</label>
+
+                        <h1>Schema Editor</h1>
+
+                        <br>
+
+                        <label for = name> <a href = 'https://shopify.dev/themes/architecture/sections/section-schema#name'>Name</a> <br> <small>seen in the customizer.</small> </label>
+
+                        <br>
+
+                        <input type = text id = name name = name>
+
+                        <br>
+                        <br>
+
+                        <label for = max_blocks> <a href = 'https://shopify.dev/themes/architecture/sections/section-schema#max_blocks'>Max Blocks</a> <br> <small>that can be added to this section.</small> </label>
+
+                        <br>
+
                         <input type = number id = max_blocks name = max_blocks min = 0 max = 50>
+
+                        <br>
+
                     </div>
                 </body>
             </html>
