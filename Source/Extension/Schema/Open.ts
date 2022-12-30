@@ -130,7 +130,7 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                 <body>
                     <div id = Settings >
 
-                        <h1>Schema Editor</h1>
+                        <h1> Schema Editor </h1>
 
                         <br>
 
@@ -212,13 +212,34 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                         <br>
                         <br>
 
+                        ${
+                            option({
+                                description : 'the merchant can use in the customizer.' ,
+                                title : 'Settings' ,
+                                link : 'https://shopify.dev/themes/architecture/sections/section-schema#settings' ,
+                                id : 'settings' ,
+
+                                content : `
+                                    <div id = settings_addition>
+                                        <div data-type = checkbox></div>
+                                        <div data-type = checkbox></div>
+                                        <div data-type = checkbox></div>
+                                    </div>
+                                    <div id = settings></div>
+                                `
+                            })
+                        }
+
+                        <br>
+                        <br>
+
                     </div>
                 </body>
             </html>
         `
 
-    } catch ( e ){
-        console.warn('eRR',e)
+    } catch ( error ){
+        console.warn(error);
     }
 }
 
