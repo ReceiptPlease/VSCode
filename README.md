@@ -48,7 +48,7 @@
 
 ## Building
 
-*In development, no pre-built downloads.*
+*How to compile the extension yourself.*
 
 <br>
 
