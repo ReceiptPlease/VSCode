@@ -111,7 +111,9 @@ window.addEventListener('message',( event ) => {
 
 
 const Settings = {
-    'checkbox' : checkbox
+    'checkbox' : checkbox ,
+    'number' : number ,
+    'radio' : radio
 }
 
 function checkbox ( setting ){
@@ -185,6 +187,253 @@ function checkbox ( setting ){
         const input = create('input');
         input.type = 'checkbox';
         input.value = setting.default ?? false;
+
+        input.addEventListener('input',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('info');
+        label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.info ?? '';
+
+        input.addEventListener('input',() => {
+
+            let { value } = input;
+
+            if( value.length < 1 )
+                value = null;
+
+            settings.info = value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+    html_settings.appendChild(item);
+}
+
+function number ( setting ){
+
+    const item = create();
+
+    {
+        const remove = create('div');
+        remove.innerText = 'x';
+        item.appendChild(remove);
+
+        remove.addEventListener('click',() => {
+            settings.splice(settings.indexOf(settings));
+            item.remove();
+            update();
+        })
+    }
+
+    {
+        const header = create('h2');
+        header.innerText = 'Number';
+        item.appendChild(header);
+    }
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.id ?? '';
+
+        input.addEventListener('input',() => {
+            settings.id = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.label ?? '';
+
+        input.addEventListener('input',() => {
+            settings.label = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
+
+        const input = create('input');
+        input.type = 'checkbox';
+        input.value = setting.default ?? 0;
+
+        input.addEventListener('input',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('info');
+        label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.info ?? '';
+
+        input.addEventListener('input',() => {
+
+            let { value } = input;
+
+            if( value.length < 1 )
+                value = null;
+
+            settings.info = value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+    html_settings.appendChild(item);
+}
+
+
+function radio ( setting ){
+
+    const item = create();
+
+    {
+        const remove = create('div');
+        remove.innerText = 'x';
+        item.appendChild(remove);
+
+        remove.addEventListener('click',() => {
+            settings.splice(settings.indexOf(settings));
+            item.remove();
+            update();
+        })
+    }
+
+    {
+        const header = create('h2');
+        header.innerText = 'Radio';
+        item.appendChild(header);
+    }
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.id ?? '';
+
+        input.addEventListener('input',() => {
+            settings.id = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.label ?? '';
+
+        input.addEventListener('input',() => {
+            settings.label = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Options </a> <br> the merchant can choose from.`;
+
+        const input = create('select');
+        input.value = setting.label ?? '';
+
+        input.addEventListener('input',() => {
+            settings.label = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
+
+        const input = create('input');
+        input.type = 'checkbox';
+        input.value = setting.default ?? 0;
 
         input.addEventListener('input',() => {
             settings.default = input.value;

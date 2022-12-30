@@ -104,7 +104,7 @@ h2 {
     padding : 0.5rem ;
 }
 
-#settings_addition > div {
+#settings_addition > img {
 
     background : var(--vscode-button-secondaryBackground) ;
 
@@ -116,7 +116,7 @@ h2 {
     cursor : pointer ;
 }
 
-#settings_addition > div:hover {
+#settings_addition > img:hover {
 
     border-color : var(--vscode-charts-orange) ;
     background : var(--vscode-button-secondaryHoverBackground) ;
