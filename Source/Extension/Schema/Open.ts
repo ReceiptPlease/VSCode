@@ -113,13 +113,15 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
         function option ({ title , description , link , content , id }){
             return [
+                '<div>' ,
                 `<label for = '${ id }'>` ,
                 `<a href = '${ link }'>${ title }</a>` ,
                 '<br>' ,
                 `<small>${ description }</small>` ,
                 `</label>` ,
                 '<br>' ,
-                content
+                content ,
+                '</div>'
             ].join('')
         }
 
@@ -159,11 +161,12 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                     <link rel = stylesheet type = 'text/css' href = '${ asset('Style.css') }'>
                 </head>
                 <body>
-                    <div id = Settings >
 
-                        <h1> Schema Editor </h1>
+                    <h1> Schema Editor </h1>
 
                         <br>
+
+                    <div id = Settings >
 
                         ${
                             text({
@@ -173,9 +176,6 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                                 id : 'name'
                             })
                         }
-
-                        <br>
-                        <br>
 
                         ${
                             option({
@@ -196,9 +196,6 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                             })
                         }
 
-                        <br>
-                        <br>
-
                         ${
                             text({
                                 description : 'the section body gets assigned.' ,
@@ -207,9 +204,6 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                                 id : 'class'
                             })
                         }
-
-                        <br>
-                        <br>
 
                         ${
                             option({
@@ -228,9 +222,6 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                             })
                         }
 
-                        <br>
-                        <br>
-
                         ${
                             text({
                                 description : 'that can be added to this section.' ,
@@ -239,9 +230,8 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                                 id : 'max_blocks'
                             })
                         }
-
-                        <br>
-                        <br>
+                    </div>
+                    <div id = settingsblock>
 
                         ${
                             option({
@@ -259,10 +249,9 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                             })
                         }
 
-                        <br>
-                        <br>
-
                     </div>
+                    <br>
+                    <br>
                 </body>
             </html>
         `

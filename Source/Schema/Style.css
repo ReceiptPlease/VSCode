@@ -2,14 +2,22 @@
 
 #Settings {
 
-    min-width : 420px ;
-    width : fit-content ;
+    margin-bottom : 5rem ;
+    margin-top : 2rem ;
 
     padding : 1rem ;
+    gap : 4rem ;
+
+    grid-template-columns : repeat( auto-fit , 22rem ) ;
+    justify-content : center ;
+    display : grid ;
+}
+
+#Settings > div {
 
     flex-direction : column ;
+    align-items : stretch ;
     display : flex ;
-    gap : 0.5rem ;
 }
 
 :is( input , select ) {
@@ -29,6 +37,7 @@
 
 label {
     user-select : none ;
+    text-align : center ;
 }
 
 :is( a , input[ type = 'checkbox' ]):focus {
@@ -41,17 +50,34 @@ label > a {
     font-weight : bold ;
 }
 
+h1 {
+    text-align : center ;
+}
+
 h2 {
     margin-top : 0 ;
 }
 
 
-#settings {
+#settingsblock > div {
 
     flex-direction : column ;
-    align-items : stretch ;
+    align-items : center ;
     display : flex ;
+}
+
+#settings {
+
+    width : 100% ;
+
+    grid-template-columns : repeat(auto-fit,26rem) ;
+    justify-content : center ;
+    display : grid ;
     gap : 1.5rem ;
+}
+
+#settings * {
+    text-align : left ;
 }
 
 #settings > div {
@@ -96,11 +122,14 @@ h2 {
 
 #settings_addition {
 
+    max-width : 30rem ;
+
     grid-template-columns : repeat( auto-fit , 2rem ) ;
     justify-content : center ;
     display : grid ;
     gap : 0.3rem ;
 
+    margin-bottom : 2rem ;
     padding : 0.5rem ;
 }
 
