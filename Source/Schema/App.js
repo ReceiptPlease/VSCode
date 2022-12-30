@@ -17,6 +17,8 @@ const
     html_tag = byId('tag') ;
 
 
+let settings;
+
 
 const { log } = console;
 
@@ -95,90 +97,151 @@ window.addEventListener('message',( event ) => {
         html_name.value = content.name;
         html_tag.value = content.tag ?? 'div';
 
-        const { settings = [] } = content;
 
-        for ( const setting of settings ){
+        html_settings.innerHTML = '';
 
-            switch ( setting.type ){
-            case 'checkbox' : {
+        settings = content.settings ?? [];
 
-                const item = create();
-
-                {
-                    const remove = create('div');
-                    remove.innerText = 'x';
-                    item.appendChild(remove);
-                }
-
-                {
-                    const header = create('h2');
-                    header.innerText = 'Checkbox';
-                    item.appendChild(header);
-                }
-
-                {
-                    const label = create('label');
-                    label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
-
-                    const input = create('input');
-                    input.type = 'text';
-                    input.value = setting.id ?? '';
-
-                    input.addEventListener('input',() => {
-
-                    })
-
-                    item.appendChild(label);
-                    item.appendChild(create('br'));
-                    item.appendChild(input);
-                }
-
-                item.appendChild(create('br'));
-                item.appendChild(create('br'));
-
-                {
-                    const label = create('label');
-                    label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
-
-                    const input = create('input');
-                    input.type = 'text';
-                    input.value = setting.label ?? '';
-
-                    input.addEventListener('input',() => {
-
-                    })
-
-                    item.appendChild(label);
-                    item.appendChild(create('br'));
-                    item.appendChild(input);
-                }
-
-                item.appendChild(create('br'));
-                item.appendChild(create('br'));
-
-                {
-                    const label = create('label');
-                    label.innerHTML = `<a> Default </a> <br> state to be set to.`;
-
-                    const input = create('input');
-                    input.type = 'checkbox';
-                    input.value = setting.default ?? false;
-
-                    input.addEventListener('input',() => {
-
-                    })
-
-                    item.appendChild(label);
-                    item.appendChild(create('br'));
-                    item.appendChild(input);
-                }
-
-
-                html_settings.appendChild(item);
-            }
-            }
-        }
+        for ( const setting of settings )
+            makeSettings(setting);
 
         break;
     }
 });
+
+
+const Settings = {
+    'checkbox' : checkbox
+}
+
+function checkbox ( setting ){
+
+    const item = create();
+
+    {
+        const remove = create('div');
+        remove.innerText = 'x';
+        item.appendChild(remove);
+
+        remove.addEventListener('click',() => {
+            settings.splice(settings.indexOf(settings));
+            item.remove();
+            update();
+        })
+    }
+
+    {
+        const header = create('h2');
+        header.innerText = 'Checkbox';
+        item.appendChild(header);
+    }
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.id ?? '';
+
+        input.addEventListener('input',() => {
+            settings.id = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.label ?? '';
+
+        input.addEventListener('input',() => {
+            settings.label = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
+
+        const input = create('input');
+        input.type = 'checkbox';
+        input.value = setting.default ?? false;
+
+        input.addEventListener('input',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        const label = create('info');
+        label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.info ?? '';
+
+        input.addEventListener('input',() => {
+
+            let { value } = input;
+
+            if( value.length < 1 )
+                value = null;
+
+            settings.info = value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+    html_settings.appendChild(item);
+}
+
+function unknown ( setting ){
+
+    const item = create();
+
+    item.innerText = `Setting type not implemented : ${ setting.type }`;
+
+    html_settings.appendChild(item);
+}
+
+function makeSettings ( setting ){
+
+    const { type } = setting;
+
+    if( type in Settings )
+        Settings[type](settings);
+    else
+        unknown(setting);
+}

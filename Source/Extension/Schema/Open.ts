@@ -222,8 +222,31 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
                                 content : `
                                     <div id = settings_addition>
                                         <div data-type = checkbox></div>
-                                        <div data-type = checkbox></div>
-                                        <div data-type = checkbox></div>
+                                        <div data-type = number></div>
+                                        <div data-type = radio></div>
+                                        <div data-type = range></div>
+                                        <div data-type = select></div>
+                                        <div data-type = text></div>
+                                        <div data-type = textarea></div>
+                                        <div data-type = article></div>
+                                        <div data-type = blog></div>
+                                        <div data-type = collection></div>
+                                        <div data-type = collection_list></div>
+                                        <div data-type = color></div>
+                                        <div data-type = color_background></div>
+                                        <div data-type = font_picker></div>
+                                        <div data-type = html></div>
+                                        <div data-type = image_picker></div>
+                                        <div data-type = inline_richtext></div>
+                                        <div data-type = link_list></div>
+                                        <div data-type = liquid></div>
+                                        <div data-type = page></div>
+                                        <div data-type = product></div>
+                                        <div data-type = product_list></div>
+                                        <div data-type = richtext></div>
+                                        <div data-type = url></div>
+                                        <div data-type = video></div>
+                                        <div data-type = video_url></div>
                                     </div>
                                     <div id = settings></div>
                                 `
