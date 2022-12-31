@@ -6,6 +6,18 @@ const byId = ( id ) =>
     document.getElementById(id);
 
 
+const capitalize = ( word ) =>
+    word.charAt(0).toUpperCase() + word.slice(1);
+
+const nonEmpty = ( string ) =>
+    string.length > 0;
+
+const prettify = ( text ) => text
+    .split(/[_-]+/g)
+    .filter(nonEmpty)
+    .map(capitalize)
+    .join(' ');
+
 
 const
     html_settings_addition = byId('settings_addition') ,
@@ -23,6 +35,8 @@ let settings;
 const { log } = console;
 
 const api = acquireVsCodeApi();
+
+log('API',api);
 
 
 html_max_blocks.oninput = update;
@@ -61,6 +75,10 @@ function update (){
     if( limit === 'unlimited' )
         limit = null;
 
+
+    log('Settings',settings);
+
+
     api.postMessage({
         command : 'updateFile' ,
         content : {
@@ -80,6 +98,11 @@ for ( const element of html_settings_addition.childNodes )
         const { type } = element.dataset;
 
         log('clicked',type);
+
+        const setting = { type };
+
+        settings.push(setting);
+        makeSettings(setting);
     })
 
 window.addEventListener('message',( event ) => {
@@ -88,6 +111,8 @@ window.addEventListener('message',( event ) => {
 
     switch ( data.command ){
     case 'updateInterface' :
+
+        log('Interface Update',data.content);
 
         const { content } = data;
 
@@ -113,10 +138,26 @@ window.addEventListener('message',( event ) => {
 const Settings = {
     'checkbox' : checkbox ,
     'number' : number ,
-    'radio' : radio
+    'radio' : radio ,
+    'video_url' : video_url ,
+
+
+    'article' : simple ,
+    'blog' : simple ,
+    'collection' : simple ,
+    'html' : simple ,
+    'image_picker' : simple ,
+    'link_list' : simple ,
+    'page' : simple ,
+
+    'video' : simple ,
+    'url' : url
 }
 
-function checkbox ( setting ){
+
+function settingTemplate ( setting ){
+
+    console.log('Settings',settings);
 
     const item = create();
 
@@ -126,7 +167,7 @@ function checkbox ( setting ){
         item.appendChild(remove);
 
         remove.addEventListener('click',() => {
-            settings.splice(settings.indexOf(settings));
+            settings.splice(settings.indexOf(setting));
             item.remove();
             update();
         })
@@ -134,7 +175,7 @@ function checkbox ( setting ){
 
     {
         const header = create('h2');
-        header.innerText = 'Checkbox';
+        header.innerHTML = `<img src = '${ document.querySelector(`img[ data-type = '${ setting.type }' ]`).src }'><a href = 'https://shopify.dev/themes/architecture/settings/input-settings#${ setting.type }'>${ prettify(setting.type) }</a>`;
         item.appendChild(header);
     }
 
@@ -182,27 +223,6 @@ function checkbox ( setting ){
 
     {
         const label = create('label');
-        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
-
-        const input = create('input');
-        input.type = 'checkbox';
-        input.value = setting.default ?? false;
-
-        input.addEventListener('input',() => {
-            settings.default = input.value;
-            update();
-        })
-
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
-    }
-
-    item.appendChild(create('br'));
-    item.appendChild(create('br'));
-
-    {
-        const label = create('info');
         label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
 
         const input = create('input');
@@ -225,84 +245,134 @@ function checkbox ( setting ){
         item.appendChild(input);
     }
 
+    html_settings.appendChild(item);
+
+    return item
+}
+
+
+function checkbox ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    const label = create('label');
+    label.innerHTML = `<a> Default </a> <br> state to be set to.`;
+
+    const input = create('input');
+    input.type = 'checkbox';
+    input.value = setting.default ?? false;
+
+    input.addEventListener('input',() => {
+        settings.default = input.value;
+        update();
+    })
+
+    item.appendChild(label);
+    item.appendChild(create('br'));
+    item.appendChild(input);
 
     html_settings.appendChild(item);
 }
 
 function number ( setting ){
 
-    const item = create();
+    const item = settingTemplate(setting);
 
-    {
-        const remove = create('div');
-        remove.innerText = 'x';
-        item.appendChild(remove);
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
 
-        remove.addEventListener('click',() => {
-            settings.splice(settings.indexOf(settings));
-            item.remove();
-            update();
-        })
-    }
+    const label = create('label');
+    label.innerHTML = `<a> Default </a> <br> state to be set to.`;
 
-    {
-        const header = create('h2');
-        header.innerText = 'Number';
-        item.appendChild(header);
-    }
+    const input = create('input');
+    input.type = 'number';
+    input.value = setting.default ?? 0;
 
-    {
-        const label = create('label');
-        label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
+    input.addEventListener('input',() => {
+        settings.default = input.value;
+        update();
+    })
 
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.id ?? '';
+    item.appendChild(label);
+    item.appendChild(create('br'));
+    item.appendChild(input);
 
-        input.addEventListener('input',() => {
-            settings.id = input.value;
-            update();
-        })
+    html_settings.appendChild(item);
+}
 
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
-    }
+function simple ( setting ){
+
+    const item = settingTemplate(setting);
+
+    html_settings.appendChild(item);
+}
+
+function video_url ( setting ){
+
+    const item = settingTemplate(setting);
 
     item.appendChild(create('br'));
     item.appendChild(create('br'));
 
     {
         const label = create('label');
-        label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
-
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.label ?? '';
-
-        input.addEventListener('input',() => {
-            settings.label = input.value;
-            update();
-        })
-
+        label.innerHTML = `<a> Accept </a> <br> links from these platforms.`;
         item.appendChild(label);
         item.appendChild(create('br'));
-        item.appendChild(input);
+
+        setting.accept ??= [];
+
+        const { accept } = setting;
+
+        for ( const platform of [ 'youtube' , 'vimeo' ] ){
+
+            const wrapper = create();
+            wrapper.classname = 'sidebyside';
+
+            const input = create('input');
+            input.type = 'checkbox';
+            input.checked = accept.includes(platform);
+
+            input.onchange = () => {
+
+                const values = new Set(setting.accept);
+
+                if(input.checked)
+                    values.add(platform);
+                else
+                    values.delete(platform);
+
+                setting.accept = [ ... values ];
+
+                update();
+            }
+
+            const label = create('label');
+            label.innerHTML = prettify(platform);
+
+            wrapper.appendChild(input);
+            wrapper.appendChild(label);
+
+            item.appendChild(wrapper);
+        }
     }
 
-    item.appendChild(create('br'));
-    item.appendChild(create('br'));
-
     {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
         const label = create('label');
-        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
+        label.innerHTML = `<a> Placeholder </a> <br> for the video Url.`;
 
         const input = create('input');
-        input.type = 'checkbox';
-        input.value = setting.default ?? 0;
+        input.type = 'text';
+        input.value = setting.placeholder ?? '';
 
         input.addEventListener('input',() => {
-            settings.default = input.value;
+            settings.placeholder = input.value;
             update();
         })
 
@@ -310,26 +380,35 @@ function number ( setting ){
         item.appendChild(create('br'));
         item.appendChild(input);
     }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function url ( setting ){
+
+    const item = settingTemplate(setting);
 
     item.appendChild(create('br'));
     item.appendChild(create('br'));
 
     {
-        const label = create('info');
-        label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
 
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.info ?? '';
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> url to use.`;
 
-        input.addEventListener('input',() => {
+        const input = create('select');
+        input.innerHTML = `
+            <option value = '/collections'>/collections</option>
+            <option value = '/collections/all'>/collections/all</option>
+        `;
+        input.selected = setting.default ?? '/collections';
 
-            let { value } = input;
-
-            if( value.length < 1 )
-                value = null;
-
-            settings.info = value;
+        input.addEventListener('change',() => {
+            settings.default = input.selected;
             update();
         })
 
@@ -337,6 +416,7 @@ function number ( setting ){
         item.appendChild(create('br'));
         item.appendChild(input);
     }
+
 
 
     html_settings.appendChild(item);
@@ -345,64 +425,8 @@ function number ( setting ){
 
 function radio ( setting ){
 
-    const item = create();
+    const item = settingTemplate(setting);
 
-    {
-        const remove = create('div');
-        remove.innerText = 'x';
-        item.appendChild(remove);
-
-        remove.addEventListener('click',() => {
-            settings.splice(settings.indexOf(settings));
-            item.remove();
-            update();
-        })
-    }
-
-    {
-        const header = create('h2');
-        header.innerText = 'Radio';
-        item.appendChild(header);
-    }
-
-    {
-        const label = create('label');
-        label.innerHTML = `<a> Id </a> <br> to identify the setting.`;
-
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.id ?? '';
-
-        input.addEventListener('input',() => {
-            settings.id = input.value;
-            update();
-        })
-
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
-    }
-
-    item.appendChild(create('br'));
-    item.appendChild(create('br'));
-
-    {
-        const label = create('label');
-        label.innerHTML = `<a> Label </a> <br> to display in the customizer.`;
-
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.label ?? '';
-
-        input.addEventListener('input',() => {
-            settings.label = input.value;
-            update();
-        })
-
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
-    }
 
     item.appendChild(create('br'));
     item.appendChild(create('br'));
@@ -445,33 +469,6 @@ function radio ( setting ){
         item.appendChild(input);
     }
 
-    item.appendChild(create('br'));
-    item.appendChild(create('br'));
-
-    {
-        const label = create('info');
-        label.innerHTML = `<a> Info </a> <br> that describes the settings.`;
-
-        const input = create('input');
-        input.type = 'text';
-        input.value = setting.info ?? '';
-
-        input.addEventListener('input',() => {
-
-            let { value } = input;
-
-            if( value.length < 1 )
-                value = null;
-
-            settings.info = value;
-            update();
-        })
-
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
-    }
-
 
     html_settings.appendChild(item);
 }
@@ -490,7 +487,7 @@ function makeSettings ( setting ){
     const { type } = setting;
 
     if( type in Settings )
-        Settings[type](settings);
+        Settings[type](setting);
     else
         unknown(setting);
 }
