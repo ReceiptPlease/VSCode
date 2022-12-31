@@ -98,4 +98,4 @@
 <!---------------------------------[ Badges ]---------------------------------->
 
 [Badge Release]: https://img.shields.io/github/v/release/ReceiptPlease/VSCode?style=for-the-badge&logoColor=white&logo=GitHub&labelColor=2f76b9&color=28659e
-[Badge Stars]: https://img.shields.io/github/stars/OmegaTools/GRAPH?style=for-the-badge&logoColor=white&logo=Trustpilot&labelColor=FF66AA&color=cf538b
+[Badge Stars]: https://img.shields.io/github/stars/ReceiptPlease/VSCode?style=for-the-badge&logoColor=white&logo=Trustpilot&labelColor=FF66AA&color=cf538b
