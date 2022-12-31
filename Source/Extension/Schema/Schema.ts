@@ -1,6 +1,6 @@
 
 import { ExtensionContext , workspace , window , TreeDataProvider , TreeItem } from 'vscode'
-import { readdir } from 'node:fs/promises'
+import { readdir , readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 
@@ -44,6 +44,17 @@ const nonEmpty = ( string ) =>
     string.length > 0;
 
 
+const schemePattern = /(?<=\{% *schema *%\})[\S\s]*(?=\{% *endschema *%\})/;
+
+
+async function hasSchema ( path ){
+
+    const content = await readFile(path,{ encoding : 'utf8' });
+
+    return schemePattern.test(content)
+}
+
+
 class SchemaTree implements TreeDataProvider<SchemaItem> {
 
     context : ExtensionContext ;
@@ -72,23 +83,33 @@ class SchemaTree implements TreeDataProvider<SchemaItem> {
 
         const { context } = this;
 
-        const toSchema = ( filename ) => {
 
-            const path = join(sections,filename);
+        const children : SchemaItem [] = [];
 
-            const label = filename
+        for ( const file of files ){
+
+            if( ! isLiquid(file) )
+                continue
+
+            const path = join(sections,file);
+
+            const isSchema = await hasSchema(path);
+
+            if( ! isSchema )
+                continue
+
+            const label = file
                 .replace(/\.liquid$/,'')
                 .split(/[_-]+/g)
                 .filter(nonEmpty)
                 .map(capitalize)
                 .join(' ');
 
-            return new SchemaItem(context,label,path);
+            const item = new SchemaItem(context,label,path);
+
+            children.push(item);
         }
 
-
-        return files
-            .filter(isLiquid)
-            .map(toSchema);
+        return children
     }
 }
