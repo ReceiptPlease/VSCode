@@ -136,6 +136,7 @@ window.addEventListener('message',( event ) => {
 
 
 const Settings = {
+
     'checkbox' : checkbox ,
     'number' : number ,
     'radio' : radio ,
@@ -151,7 +152,9 @@ const Settings = {
     'page' : simple ,
 
     'video' : simple ,
-    'url' : url
+    'url' : url ,
+    'richtext' : richtext ,
+    'product_list' : product_list
 }
 
 
@@ -163,7 +166,7 @@ function settingTemplate ( setting ){
 
     {
         const remove = create('div');
-        remove.innerText = 'x';
+        remove.innerText = '❌';
         item.appendChild(remove);
 
         remove.addEventListener('click',() => {
@@ -330,7 +333,7 @@ function video_url ( setting ){
         for ( const platform of [ 'youtube' , 'vimeo' ] ){
 
             const wrapper = create();
-            wrapper.classname = 'sidebyside';
+            wrapper.className = 'sidebyside';
 
             const input = create('input');
             input.type = 'checkbox';
@@ -409,6 +412,93 @@ function url ( setting ){
 
         input.addEventListener('change',() => {
             settings.default = input.selected;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function richtext ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> content to display.`;
+
+        const input = create('textarea');
+        input.cols = 16;
+        input.rows = 4;
+        input.value = setting.default ?? '';
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function product_list ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Limit </a> <br> of collections to include ( 1 - 50 ).`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.limit ?? '';
+
+        input.addEventListener('change',() => {
+
+            let { value } = input;
+
+            value = parseInt(value);
+
+
+            if( Number.isFinite(value) ){
+
+                if( value < 1 )
+                    value = 1;
+
+                if( value > 50 )
+                    value = 50;
+
+                input.value = value;
+
+            } else {
+                value = null;
+            }
+
+            settings.limit = value;
             update();
         })
 

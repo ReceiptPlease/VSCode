@@ -146,7 +146,7 @@ export async function openSchema ( context : ExtensionContext , filePath : strin
 
             return `<img
                 data-type = '${ type }'
-                src = '${ asset(`${ title }.png`) }'
+                src = '${ asset(`Icons/${ title }.png`) }'
                 title = '${ title }'
             >`
         }).join('');
