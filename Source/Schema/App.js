@@ -40,8 +40,8 @@ log('API',api);
 
 
 html_max_blocks.oninput = update;
-html_class.oninput = update;
 html_limit.onchange = update;
+html_class.oninput = update;
 html_name.oninput = update;
 html_tag.onchange = update;
 
@@ -146,15 +146,24 @@ const Settings = {
     'article' : simple ,
     'blog' : simple ,
     'collection' : simple ,
-    'html' : simple ,
+    'html' : html ,
     'image_picker' : simple ,
     'link_list' : simple ,
     'page' : simple ,
 
+    'text' : text ,
+    'textarea' : textarea ,
+    'collection_list' : collection_list ,
+    'color' : color ,
+    'color_background' : color_background ,
+    'font_picker' : font_picker ,
+    'liquid' : liquid ,
+    'product' : simple ,
     'video' : simple ,
     'url' : url ,
     'richtext' : richtext ,
-    'product_list' : product_list
+    'product_list' : product_list ,
+    'inline_richtext' : inline_richtext
 }
 
 
@@ -459,6 +468,206 @@ function richtext ( setting ){
     html_settings.appendChild(item);
 }
 
+function textarea ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> content to display.`;
+
+        const input = create('textarea');
+        input.cols = 16;
+        input.rows = 4;
+        input.value = setting.default ?? '';
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function liquid ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> liquid code to insert.`;
+
+        const input = create('textarea');
+        input.cols = 16;
+        input.rows = 4;
+        input.value = setting.default ?? '';
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function inline_richtext ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> inline richtext to use.`;
+
+        const input = create('textarea');
+        input.rows = 1;
+        input.wrap = 'soft';
+        input.value = setting.default ?? '';
+        input.style.resize = 'none';
+
+        const { ceil , max } = Math;
+
+        input.addEventListener('input',() => {
+
+            const { length } = input.value;
+
+            input.style.height = `${ max((ceil(length / 40) * 1.3 + 0.4).toFixed(2),1.7) }rem`
+        })
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function text ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> text to display.`;
+
+        const input = create('textarea');
+        input.rows = 1;
+        input.wrap = 'soft';
+        input.value = setting.default ?? '';
+        input.style.resize = 'none';
+
+        const { ceil , max } = Math;
+
+        input.addEventListener('input',() => {
+
+            const { length } = input.value;
+
+            input.style.height = `${ max((ceil(length / 40) * 1.3 + 0.4).toFixed(2),1.7) }rem`
+        })
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function color_background ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> background to use.`;
+
+        const input = create('textarea');
+        input.rows = 1;
+        input.wrap = 'soft';
+        input.value = setting.default ?? '';
+        input.style.resize = 'none';
+
+        const { ceil , max } = Math;
+
+        input.addEventListener('input',() => {
+
+            const { length } = input.value;
+
+            input.style.height = `${ max((ceil(length / 40) * 1.3 + 0.4).toFixed(2),1.7) }rem`
+        })
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
 function product_list ( setting ){
 
     const item = settingTemplate(setting);
@@ -512,8 +721,166 @@ function product_list ( setting ){
     html_settings.appendChild(item);
 }
 
+function collection_list ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Limit </a> <br> of collections to include ( 1 - 50 ).`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.limit ?? '';
+
+        input.addEventListener('change',() => {
+
+            let { value } = input;
+
+            value = parseInt(value);
+
+
+            if( Number.isFinite(value) ){
+
+                if( value < 1 )
+                    value = 1;
+
+                if( value > 50 )
+                    value = 50;
+
+                input.value = value;
+
+            } else {
+                value = null;
+            }
+
+            settings.limit = value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+
+function font_picker ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> font to use.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.default ?? '';
+
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function color ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Default </a> <br> color to use.`;
+
+        const input = create('input');
+        input.type = 'text';
+        input.value = setting.default ?? '';
+
+        input.addEventListener('change',() => {
+            settings.default = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
+function html ( setting ){
+
+    const item = settingTemplate(setting);
+
+    item.appendChild(create('br'));
+    item.appendChild(create('br'));
+
+    {
+        item.appendChild(create('br'));
+        item.appendChild(create('br'));
+
+        const label = create('label');
+        label.innerHTML = `<a> Placeholder </a> <br> html to display.`;
+
+        const input = create('textarea');
+        input.cols = 16;
+        input.rows = 4;
+        input.value = setting.placeholder ?? '';
+
+        input.addEventListener('change',() => {
+            settings.placeholder = input.value;
+            update();
+        })
+
+        item.appendChild(label);
+        item.appendChild(create('br'));
+        item.appendChild(input);
+    }
+
+
+
+    html_settings.appendChild(item);
+}
+
 
 function radio ( setting ){
+
+    setting.options ??= [];
+
 
     const item = settingTemplate(setting);
 
@@ -525,39 +892,133 @@ function radio ( setting ){
         const label = create('label');
         label.innerHTML = `<a> Options </a> <br> the merchant can choose from.`;
 
-        const input = create('select');
-        input.value = setting.label ?? '';
+        const wrapper = create();
+        wrapper.className = 'Options';
 
-        input.addEventListener('input',() => {
-            settings.label = input.value;
+        const options = create();
+        wrapper.appendChild(options);
+
+        function buildOptions (){
+
+            for ( const option of setting.options ){
+
+                const element = create();
+
+                const label = create('input');
+                label.type = 'text';
+                label.placeholder = '< Label >';
+                label.value = option.label;
+
+                const value = create('input');
+                value.type = 'text';
+                value.placeholder = '< Value >';
+                value.value = option.value;
+
+                const remove = create('button');
+                remove.innerText = 'X';
+
+                label.addEventListener('change',() => {
+                    option.label = label.value;
+                    updateDefault();
+                    update();
+                })
+
+                value.addEventListener('change',() => {
+                    option.value = value.value;
+                    updateDefault();
+                    update();
+                })
+
+                remove.addEventListener('click',() => {
+                    setting.options.splice(setting.options.indexOf(option),1);
+                    element.remove();
+                    updateDefault();
+                    update();
+                })
+
+                element.appendChild(label);
+                element.appendChild(value);
+                element.appendChild(remove);
+
+                options.appendChild(element);
+            }
+        }
+
+        buildOptions();
+
+        const add = create('button');
+        wrapper.appendChild(add);
+        add.innerText = '+';
+
+        add.addEventListener('click',() => {
+
+            setting.options.push({
+                label : '' ,
+                value : ''
+            })
+
+            while ( options.childNodes.length )
+                options.childNodes[0].remove();
+
+            buildOptions();
+            updateDefault();
+
             update();
         })
 
         item.appendChild(label);
         item.appendChild(create('br'));
-        item.appendChild(input);
+        item.appendChild(wrapper);
     }
 
     item.appendChild(create('br'));
     item.appendChild(create('br'));
 
-    {
-        const label = create('label');
-        label.innerHTML = `<a> Default </a> <br> state to be set to.`;
 
-        const input = create('input');
-        input.type = 'checkbox';
-        input.value = setting.default ?? 0;
+    const label = create('label');
+    label.innerHTML = `<a> Default </a> <br> state to be set to.`;
 
-        input.addEventListener('input',() => {
-            settings.default = input.value;
+    const selection = create('select');
+
+    item.appendChild(label);
+    item.appendChild(create('br'));
+    item.appendChild(selection);
+
+
+    function updateDefault (){
+
+        selection.onchange = () => {};
+
+        selection.innerHTML = setting.options.map((option) => {
+            return `<option value = '${ option.value }'>${ option.label }</option>`
+        }).join('');
+
+        let selected = setting.default ?? '';
+
+        if( ! setting.options.find(({ value }) => value === selected) )
+            selected = setting.options[0]?.value ?? '';
+
+        if( setting.options.length === 0 )
+            selected = '';
+
+        selection.style.display = ( setting.options.length === 0 )
+            ? 'none'
+            : null ;
+
+        selection.selected = selected;
+
+        selection.onchange = save;
+
+        if( selected !== setting.default )
+            save();
+
+        function save (){
+            setting.default = selection.selected;
             update();
-        })
-
-        item.appendChild(label);
-        item.appendChild(create('br'));
-        item.appendChild(input);
+        }
     }
+
+    updateDefault();
 
 
     html_settings.appendChild(item);

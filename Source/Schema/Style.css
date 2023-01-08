@@ -24,7 +24,7 @@
     display : flex ;
 }
 
-:is( input , select , textarea ) {
+input , select , textarea , button {
 
     max-width : 100% ;
 
@@ -39,6 +39,27 @@
     color : var(--vscode-button-foreground) ;
 
     filter : drop-shadow( 2px 2px 4px #FFFFFF11 ) ;
+}
+
+button {
+
+    border-color : var(--vscode-activityBar-inactiveForeground) ;
+    background : var(--vscode-activityBarItem-profilesForeground) ;
+    
+    text-align : center !important ;
+    font-size : 1rem ;
+    color : white ;
+    
+    cursor : pointer ;
+}
+
+button:hover {
+    background : steelblue ;
+}
+
+textarea {
+
+    overflow-x : hidden ;
 }
 
 label {
@@ -195,4 +216,62 @@ input[ type = 'checkbox' ]{
 input[ type = 'checkbox' ]:checked {
     border-color : var(--vscode-button-secondaryBackground) ;
     background : var(--vscode-button-background) ;
+}
+
+
+.Options {
+
+    flex-direction : column ;
+    display : flex ;
+    gap : 1rem ;
+}
+
+.Options > :first-child {
+
+    flex-direction : column ;
+    display: flex ;
+    gap : 0.6rem
+}
+
+.Options > :last-child {
+    width : 100% ;
+}
+
+
+/*  Items  */
+
+.Options > :first-child > div {
+
+    grid-template-columns : 1fr 1fr 2rem ;
+    grid-template-rows : 2rem ;
+    grid-gap : 1rem ;
+    display : grid ;
+}
+
+
+/*  Label & Value  */
+
+.Options > :first-child > div > input {
+    
+    text-align : center !important ;
+    width : 100% ;
+}
+
+
+/*  Remove Button  */
+
+.Options > :first-child > div > :last-child {
+
+    background : var(--vscode-charts-red) ;    
+    
+    justify-content : center ;
+    align-items : center ;
+    display : grid ;
+    
+    line-height : 0 ;
+    font-size : 0.8rem ;
+}
+
+.Options > :first-child > div > :last-child:hover {
+    opacity : 0.8 ;
 }
